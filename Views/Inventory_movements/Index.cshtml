@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ProyectoWeb.Models.Inventory_movements>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.type_movement)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.product_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.quantity_moved)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inventory.name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.type_movement)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.product_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.quantity_moved)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Inventory.name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.movement_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.movement_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.movement_id })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,66 @@
+﻿@model ProyectoWeb.Models.Purchases
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Purchases</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.unit_cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.unit_cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.total_cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total_cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Suppliers.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Suppliers.name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.purchase_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,50 @@
+﻿@model ProyectoWeb.Models.Inventory_movements
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Inventory_movements</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.type_movement)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.type_movement)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quantity_moved)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quantity_moved)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Inventory.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Inventory.name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.movement_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

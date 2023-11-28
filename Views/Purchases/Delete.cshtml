@@ -1,0 +1,72 @@
+﻿@model ProyectoWeb.Models.Purchases
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Purchases</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.product)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.product)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.unit_cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.unit_cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.total_cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total_cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Suppliers.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Suppliers.name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="nowhereluvBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="id_admin" />
+    </Key>
+    <Property Name="id_admin" Type="Int32" Nullable="false" />
+    <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Inventory">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="cost" Type="Int32" Nullable="false" />
+    <Property Name="stock" Type="Int32" Nullable="false" />
+    <Property Name="purchase_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Inventory_movements" Relationship="Self.FK_Inventory_movements_InventoryId" FromRole="Inventory" ToRole="Inventory_movements" />
+    <NavigationProperty Name="Purchases" Relationship="Self.FK_Inventory_PurchasesId" FromRole="Inventory" ToRole="Purchases" />
+    <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_InventoryId" FromRole="Inventory" ToRole="Sales" />
+  </EntityType>
+  <EntityType Name="Inventory_movements">
+    <Key>
+      <PropertyRef Name="movement_id" />
+    </Key>
+    <Property Name="movement_id" Type="Int32" Nullable="false" />
+    <Property Name="type_movement" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="product_id" Type="Int32" Nullable="false" />
+    <Property Name="quantity_moved" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Inventory" Relationship="Self.FK_Inventory_movements_InventoryId" FromRole="Inventory_movements" ToRole="Inventory" />
+  </EntityType>
+  <EntityType Name="Purchases">
+    <Key>
+      <PropertyRef Name="purchase_id" />
+    </Key>
+    <Property Name="purchase_id" Type="Int32" Nullable="false" />
+    <Property Name="supplier_id" Type="Int32" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="product" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="quantity" Type="Int32" Nullable="false" />
+    <Property Name="unit_cost" Type="Int32" Nullable="false" />
+    <Property Name="total_cost" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Inventory" Relationship="Self.FK_Inventory_PurchasesId" FromRole="Purchases" ToRole="Inventory" />
+    <NavigationProperty Name="Suppliers" Relationship="Self.FK_Purchases_SupplierId" FromRole="Purchases" ToRole="Suppliers" />
+  </EntityType>
+  <EntityType Name="Sales">
+    <Key>
+      <PropertyRef Name="sales_id" />
+    </Key>
+    <Property Name="sales_id" Type="Int32" Nullable="false" />
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="product_id" Type="Int32" Nullable="false" />
+    <Property Name="quantity" Type="Int32" Nullable="false" />
+    <Property Name="unit_cost" Type="Int32" Nullable="false" />
+    <Property Name="total_cost" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Inventory" Relationship="Self.FK_Sales_InventoryId" FromRole="Sales" ToRole="Inventory" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Sales_User" FromRole="Sales" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Suppliers">
+    <Key>
+      <PropertyRef Name="nit" />
+    </Key>
+    <Property Name="nit" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="phone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Purchases" Relationship="Self.FK_Purchases_SupplierId" FromRole="Suppliers" ToRole="Purchases" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="Int32" Nullable="false" />
+    <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Sales" Relationship="Self.FK_Sales_User" FromRole="User" ToRole="Sales" />
+  </EntityType>
+  <Association Name="FK_Inventory_movements_InventoryId">
+    <End Role="Inventory" Type="Self.Inventory" Multiplicity="1" />
+    <End Role="Inventory_movements" Type="Self.Inventory_movements" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Inventory">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="Inventory_movements">
+        <PropertyRef Name="movement_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Inventory_PurchasesId">
+    <End Role="Purchases" Type="Self.Purchases" Multiplicity="1" />
+    <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Purchases">
+        <PropertyRef Name="purchase_id" />
+      </Principal>
+      <Dependent Role="Inventory">
+        <PropertyRef Name="purchase_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sales_InventoryId">
+    <End Role="Inventory" Type="Self.Inventory" Multiplicity="1" />
+    <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inventory">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="Sales">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Purchases_SupplierId">
+    <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+    <End Role="Purchases" Type="Self.Purchases" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Suppliers">
+        <PropertyRef Name="nit" />
+      </Principal>
+      <Dependent Role="Purchases">
+        <PropertyRef Name="supplier_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Sales_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Sales">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="nowhereluvBDEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Admin" EntityType="Self.Admin" />
+    <EntitySet Name="Inventory" EntityType="Self.Inventory" />
+    <EntitySet Name="Inventory_movements" EntityType="Self.Inventory_movements" />
+    <EntitySet Name="Purchases" EntityType="Self.Purchases" />
+    <EntitySet Name="Sales" EntityType="Self.Sales" />
+    <EntitySet Name="Suppliers" EntityType="Self.Suppliers" />
+    <EntitySet Name="User" EntityType="Self.User" />
+    <AssociationSet Name="FK_Inventory_movements_InventoryId" Association="Self.FK_Inventory_movements_InventoryId">
+      <End Role="Inventory" EntitySet="Inventory" />
+      <End Role="Inventory_movements" EntitySet="Inventory_movements" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Inventory_PurchasesId" Association="Self.FK_Inventory_PurchasesId">
+      <End Role="Purchases" EntitySet="Purchases" />
+      <End Role="Inventory" EntitySet="Inventory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sales_InventoryId" Association="Self.FK_Sales_InventoryId">
+      <End Role="Inventory" EntitySet="Inventory" />
+      <End Role="Sales" EntitySet="Sales" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Purchases_SupplierId" Association="Self.FK_Purchases_SupplierId">
+      <End Role="Suppliers" EntitySet="Suppliers" />
+      <End Role="Purchases" EntitySet="Purchases" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sales_User" Association="Self.FK_Sales_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Sales" EntitySet="Sales" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

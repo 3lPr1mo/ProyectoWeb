@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using ProyectoWeb.Models;
 
 namespace ProyectoWeb.Controllers
@@ -53,9 +54,45 @@ namespace ProyectoWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Sales.Add(sales);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                using (var dbContextTrasaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        // Interconectar con inventario y ventas
+                        Inventory inventory = db.Inventory.Find(sales.product_id);
+                        int lastIncventoryMovement = db.Inventory_movements.Max(x => (int?)x.movement_id) ?? 0;
+                        db.Sales.Add(sales);
+                        db.SaveChanges();
+
+
+                        //Enviando a la tabla inventory_movements
+                        Inventory_movements inventory_movements = new Inventory_movements
+                        {
+                            movement_id = lastIncventoryMovement + 1,
+                            type_movement = "Salida",
+                            product_id = sales.product_id,
+                            quantity_moved = sales.quantity,
+                        };
+                        db.Inventory_movements.Add(inventory_movements);
+                        db.SaveChanges();
+
+                        //Actualizando el inventario
+                        if (inventory != null)
+                        {
+                            //Actualizar el stock
+                            inventory.stock = inventory.stock - sales.quantity;
+                            //Guardar cambios
+                            db.SaveChanges();
+                        }
+                        dbContextTrasaction.Commit();
+                        return RedirectToAction("Index");
+                    }
+                    catch(Exception)
+                    {
+                        dbContextTrasaction.Rollback();
+                        throw;
+                    }
+                }
             }
 
             ViewBag.product_id = new SelectList(db.Inventory, "product_id", "name", sales.product_id);

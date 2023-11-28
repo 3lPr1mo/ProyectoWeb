@@ -52,9 +52,48 @@ namespace ProyectoWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Purchases.Add(purchases);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                using (var dbContextTransaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        // Interconectar con inventario y compras
+                        int lastMovement = db.Inventory_movements.Max(x => (int?) x.movement_id) ?? 0;
+                        db.Purchases.Add(purchases);
+                        db.SaveChanges();
+
+                        //Agregando a inventario
+                        Inventory inventory = new Inventory
+                        {
+                            product_id = (db.Inventory.Max(x => (int?)x.product_id) ?? 0) + 1,
+                            name = purchases.product,
+                            cost = purchases.total_cost,
+                            stock = purchases.quantity,
+                            purchase_id = purchases.purchase_id,
+                        };
+                        db.Inventory.Add(inventory);
+                        db.SaveChanges();
+
+                        //Enviando a la tabla inventory_movements
+                        Inventory_movements inventory_movements = new Inventory_movements
+                        {
+                            movement_id = lastMovement + 1,
+                            type_movement = "Entrada",
+                            product_id = inventory.product_id,
+                            quantity_moved = inventory.stock,
+                        };
+                        db.Inventory_movements.Add(inventory_movements);
+                        db.SaveChanges();
+
+                        dbContextTransaction.Commit();
+                        
+                        return RedirectToAction("Index");
+                    }
+                    catch(Exception)
+                    {
+                        dbContextTransaction.Rollback();
+                        throw;
+                    }
+                }
             }
 
             ViewBag.supplier_id = new SelectList(db.Suppliers, "nit", "name", purchases.supplier_id);

@@ -134,6 +134,7 @@
     <Compile Include="Controllers\InventoriesController.cs" />
     <Compile Include="Controllers\Inventory_movementsController.cs" />
     <Compile Include="Controllers\PurchasesController.cs" />
+    <Compile Include="Controllers\ReporteVentasController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Controllers\SuppliersController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -284,6 +285,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Informes\" />
+    <Folder Include="Views\ReporteVentas\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

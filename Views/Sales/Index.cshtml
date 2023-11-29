@@ -4,60 +4,63 @@
     ViewBag.Title = "Ventas";
 }
 
-<h2>Ventas</h2>
+<h2 class="text-center mb-4" >Ventas</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.date)
+
+<table class="table  table-hover" ">
+    <tr class="text-center " style="background-color: dimgray;">
+        <th class="text-white">
+            FECHA
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.quantity)
+        <th class="text-white" ">
+            CANTIDAD
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.unit_cost)
+        <th class="text-white">
+            COSTO UNITARIO
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.total_cost)
+        <th class="text-white">
+            COSTO TOTAL
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Inventory.name)
+        <th class="text-white">
+            PRODUCTO
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.User.firstname)
+        <th class="text-white">
+            NOMBRE
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.quantity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.unit_cost)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.total_cost)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Inventory.name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.firstname)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.sales_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.sales_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.sales_id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr class="text-center">
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.unit_cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.total_cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Inventory.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.firstname)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.sales_id }, new { @class = "btn btn-outline-secondary " })
+                @Html.ActionLink("Detalles", "Details", new { id = item.sales_id }, new { @class = "btn btn-outline-info " })
+                @Html.ActionLink("Borrar", "Delete", new { id = item.sales_id }, new { @class = "btn btn-outline-danger " })
+            </td>
+        </tr>
+    }
 
 </table>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary " })
+</p>

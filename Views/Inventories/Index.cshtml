@@ -7,20 +7,19 @@
 <h2 class="text-center mb-4" >Inventario</h2>
 
 
-<table class="table  table-hover">
+<table class="table  table-hover" ">
     <tr class="text-center "style="background-color: dimgray;">
         <th class="text-white" >
-           Nombre
-
+           NOMBRE
         </th>
         <th class="text-white" ">
-            @Html.DisplayNameFor(model => model.cost)
+           COSTO
         </th>
         <th class="text-white">
-            @Html.DisplayNameFor(model => model.stock)
+           DISPONIBLES
         </th>
         <th class="text-white" >
-            @Html.DisplayNameFor(model => model.Purchases.product)
+           PRODUCTO
         </th>
         <th></th>
     </tr>
@@ -40,10 +39,9 @@
             @Html.DisplayFor(modelItem => item.Purchases.product)
         </td>
         <td>
-
             @Html.ActionLink("Editar", "Edit", new { id = item.product_id }, new { @class = "btn btn-outline-secondary " }) 
             @Html.ActionLink("Detalles", "Details", new { id = item.product_id }, new { @class = "btn btn-outline-info " }) 
-            @Html.ActionLink("Borrar", "Delete", new { id = item.product_id }, new { @class = "btn btn-outline-danger " })
+          
         </td>
     </tr>
 }
@@ -51,5 +49,5 @@
 </table>
 
 <p>
-    <a href="@Url.Action("Create")" class="btn btn-danger">Crear Nuevo</a>
+    @Html.ActionLink("Crear Nuevo", "Create", null, new { @class = "btn btn-primary " })
 </p>

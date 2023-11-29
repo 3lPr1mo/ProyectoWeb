@@ -1,51 +1,54 @@
 ﻿@model IEnumerable<ProyectoWeb.Models.Inventory_movements>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Movimientos";
 }
 
-<h2>Index</h2>
+<h2 class="text-center mb-4">Movimientos</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.type_movement)
+
+<table class="table  table-hover" ">
+    <tr class="text-center " style="background-color: dimgray;">
+        <th class="text-white">
+            TIPO DE MOVIMIENTO
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.product_id)
+        <th class="text-white" ">
+            ID PRODUCTO
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.quantity_moved)
+        <th class="text-white">
+            CANTIDAD MOVIDA
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Inventory.name)
+        <th class="text-white">
+            NOMBRE
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.type_movement)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.product_id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.quantity_moved)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Inventory.name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.movement_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.movement_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.movement_id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr  class="text-center">
+            <td>
+                @Html.DisplayFor(modelItem => item.type_movement)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.product_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.quantity_moved)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Inventory.name)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.movement_id }, new { @class = "btn btn-outline-secondary " })
+                @Html.ActionLink("Detalles", "Details", new { id = item.movement_id }, new { @class = "btn btn-outline-info " })
+                @Html.ActionLink("Borrar", "Delete", new { id = item.movement_id }, new { @class = "btn btn-outline-danger " })
+            </td>
+        </tr>
+    }
 
 </table>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary " })
+</p>

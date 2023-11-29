@@ -69,12 +69,17 @@ namespace ProyectoWeb.Controllers
                         Inventory_movements inventory_movements = new Inventory_movements
                         {
                             movement_id = lastIncventoryMovement + 1,
-                            type_movement = "Salida",
+                            type_movement = "Out",
                             product_id = sales.product_id,
-                            quantity_moved = sales.quantity,
+                            quantity_moved = sales.quantity
                         };
-                        db.Inventory_movements.Add(inventory_movements);
-                        db.SaveChanges();
+                        db.Inventory_movements.Add(new Inventory_movements
+                        {
+                            movement_id = lastIncventoryMovement + 1,
+                            type_movement = "Out",
+                            product_id = sales.product_id,
+                            quantity_moved = sales.quantity
+                        });
 
                         //Actualizando el inventario
                         if (inventory != null)

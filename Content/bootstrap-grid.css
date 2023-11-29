@@ -4120,5 +4120,8 @@
     display: none !important;
   }
 }
+.navbar {
+    background-color: #333; /* Cambia el color de fondo */
+}
 
 /*# sourceMappingURL=bootstrap-grid.css.map */

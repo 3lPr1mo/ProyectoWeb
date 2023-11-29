@@ -266,11 +266,6 @@
     <Content Include="Views\Purchases\Details.cshtml" />
     <Content Include="Views\Purchases\Edit.cshtml" />
     <Content Include="Views\Purchases\Index.cshtml" />
-    <Content Include="Views\Inventory_movements\Create.cshtml" />
-    <Content Include="Views\Inventory_movements\Delete.cshtml" />
-    <Content Include="Views\Inventory_movements\Details.cshtml" />
-    <Content Include="Views\Inventory_movements\Edit.cshtml" />
-    <Content Include="Views\Inventory_movements\Index.cshtml" />
     <Content Include="Views\Inventories\Create.cshtml" />
     <Content Include="Views\Inventories\Delete.cshtml" />
     <Content Include="Views\Inventories\Details.cshtml" />
@@ -281,6 +276,11 @@
     <Content Include="Views\Admins\Details.cshtml" />
     <Content Include="Views\Admins\Edit.cshtml" />
     <Content Include="Views\Admins\Index.cshtml" />
+    <Content Include="Views\Inventory_movements\Create.cshtml" />
+    <Content Include="Views\Inventory_movements\Delete.cshtml" />
+    <Content Include="Views\Inventory_movements\Details.cshtml" />
+    <Content Include="Views\Inventory_movements\Edit.cshtml" />
+    <Content Include="Views\Inventory_movements\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

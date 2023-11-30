@@ -23,40 +23,48 @@
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Inventory.name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.firstname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.total_cost)
-        </td>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Inventory.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.total_cost)
+            </td>
 
-    </tr>
-}
+        </tr>
+    }
 
 </table>
 
-<div>
+@using (Html.BeginForm("VistaReporte", "ReporteVentas", FormMethod.Get))
+{
     <div>
-        <a href="@Url.Action("VistaReporteVentas", new {id = "pdf"})" class="btn btn-danger" role="button">
-            reporte pdf
-        </a>
+
+        <label for="idProducto">ID Producto</label>
+        <input type="number" id="idProducto" name="idProducto" />
+        <button type="submit">Generar reporte filtrado</button>
+        <div>
+            <a href="@Url.Action("VistaReporteVentas", new {format = "pdf"})" class="btn btn-danger" role="button">
+                reporte pdf
+            </a>
+        </div>
+        <div>
+            <a href="@Url.Action("VistaReporteVentas", new {format = "Excel"})" class="btn btn-success" role="button">
+                reporte excel
+            </a>
+        </div>
+        <div>
+            <a href="@Url.Action("VistaReporteVentas", new {format = "Word"})" class="btn btn-info" role="button">
+                reporte word
+            </a>
+        </div>
     </div>
-    <div>
-        <a href="@Url.Action("VistaReporteVentas", new {id = "Excel"})"  class="btn btn-success" role="button">
-            reporte excel
-        </a>
-    </div>
-    <div>
-        <a href="@Url.Action("VistaReporteVentas", new {id = "Word"})"  class="btn btn-info" role="button">
-            reporte word
-        </a>
-    </div>
-</div>
+}

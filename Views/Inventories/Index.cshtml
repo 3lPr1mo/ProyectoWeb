@@ -7,12 +7,12 @@
 <h2 class="text-center mb-4" >Inventario</h2>
 
 
-<table class="table  table-hover" ">
+<table class="table  table-hover">
     <tr class="text-center "style="background-color: dimgray;">
         <th class="text-white" >
            NOMBRE
         </th>
-        <th class="text-white" ">
+        <th class="text-white">
            COSTO
         </th>
         <th class="text-white">
@@ -39,9 +39,7 @@
             @Html.DisplayFor(modelItem => item.Purchases.product)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id = item.product_id }, new { @class = "btn btn-outline-secondary " }) 
             @Html.ActionLink("Detalles", "Details", new { id = item.product_id }, new { @class = "btn btn-outline-info " }) 
-          
         </td>
     </tr>
 }

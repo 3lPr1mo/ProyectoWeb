@@ -48,7 +48,7 @@ namespace ProyectoWeb.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "purchase_id,supplier_id,date,product,quantity,unit_cost,total_cost")] Purchases purchases)
+        public ActionResult Create([Bind(Include = "supplier_id,product,quantity,unit_cost")] Purchases purchases)
         {
             if (ModelState.IsValid)
             {
@@ -56,6 +56,9 @@ namespace ProyectoWeb.Controllers
                 {
                     try
                     {
+                        purchases.purchase_id = (db.Purchases.Max(x => (int?) x.purchase_id) ?? 0) + 1;
+                        purchases.total_cost = purchases.unit_cost * purchases.quantity;
+                        purchases.date = DateTime.Now;
                         // Interconectar con inventario y compras
                         int lastMovement = db.Inventory_movements.Max(x => (int?) x.movement_id) ?? 0;
                         db.Purchases.Add(purchases);

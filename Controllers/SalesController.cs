@@ -50,7 +50,7 @@ namespace ProyectoWeb.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "sales_id,user_id,date,product_id,quantity,unit_cost,total_cost")] Sales sales)
+        public ActionResult Create([Bind(Include = "user_id,product_id,quantity,unit_cost")] Sales sales)
         {
             if (ModelState.IsValid)
             {
@@ -60,7 +60,15 @@ namespace ProyectoWeb.Controllers
                     {
                         // Interconectar con inventario y ventas
                         Inventory inventory = db.Inventory.Find(sales.product_id);
+                        if (sales.quantity > inventory.stock)
+                        {
+                            ModelState.AddModelError("quantity", "Cantidad supera el tope de stock");
+                            return View(sales);
+                        }
                         int lastIncventoryMovement = db.Inventory_movements.Max(x => (int?)x.movement_id) ?? 0;
+                        sales.sales_id = (db.Sales.Max(x => (int?)x.sales_id) ?? 0) + 1;
+                        sales.total_cost = sales.unit_cost * sales.quantity;
+                        sales.date = DateTime.Now;
                         db.Sales.Add(sales);
                         db.SaveChanges();
 

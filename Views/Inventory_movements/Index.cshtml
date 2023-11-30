@@ -12,11 +12,11 @@
         <th class="text-white">
             TIPO DE MOVIMIENTO
         </th>
-        <th class="text-white" ">
-            ID PRODUCTO
-        </th>
         <th class="text-white">
             CANTIDAD MOVIDA
+        </th>
+        <th class="text-white">
+            ID PRODUCTO
         </th>
         <th class="text-white">
             NOMBRE
@@ -31,18 +31,16 @@
                 @Html.DisplayFor(modelItem => item.type_movement)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.product_id)
+                @Html.DisplayFor(modelItem => item.quantity_moved)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.quantity_moved)
+                @Html.DisplayFor(modelItem => item.product_id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Inventory.name)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Edit", new { id = item.movement_id }, new { @class = "btn btn-outline-secondary " })
                 @Html.ActionLink("Detalles", "Details", new { id = item.movement_id }, new { @class = "btn btn-outline-info " })
-                @Html.ActionLink("Borrar", "Delete", new { id = item.movement_id }, new { @class = "btn btn-outline-danger " })
             </td>
         </tr>
     }

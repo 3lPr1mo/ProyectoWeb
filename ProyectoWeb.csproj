@@ -198,6 +198,11 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>ModelDBNowhereluv.tt</DependentUpon>
     </Compile>
+    <Compile Include="nowhereluvBDDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>nowhereluvBDDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
   </ItemGroup>
@@ -243,6 +248,17 @@
     </EntityDeploy>
     <Content Include="Models\ModelDBNowhereluv.edmx.diagram">
       <DependentUpon>ModelDBNowhereluv.edmx</DependentUpon>
+    </Content>
+    <Content Include="nowhereluvBDDataSet.xsc">
+      <DependentUpon>nowhereluvBDDataSet.xsd</DependentUpon>
+    </Content>
+    <None Include="nowhereluvBDDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>nowhereluvBDDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="nowhereluvBDDataSet.xss">
+      <DependentUpon>nowhereluvBDDataSet.xsd</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -317,7 +333,7 @@
     <Content Include="Views\Inventory_movements\Details.cshtml" />
     <Content Include="Views\Inventory_movements\Edit.cshtml" />
     <Content Include="Views\Inventory_movements\Index.cshtml" />
-    <Content Include="Views\ReporteVentas\VistaVentas.cshtml" />
+    <Content Include="Views\ReporteVentas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
+using Microsoft.ReportingServices.Interfaces;
 using ProyectoWeb.Models;
 
 namespace ProyectoWeb.Controllers
@@ -60,19 +62,16 @@ namespace ProyectoWeb.Controllers
                     {
                         // Interconectar con inventario y ventas
                         Inventory inventory = db.Inventory.Find(sales.product_id);
+                        if ( sales.quantity > inventory.stock)
+                        {
+                            ModelState.AddModelError("quantity", "La cantidad ingresada supera el tope en el inventario");
+                            return View(sales);
+                        }
                         int lastIncventoryMovement = db.Inventory_movements.Max(x => (int?)x.movement_id) ?? 0;
                         db.Sales.Add(sales);
                         db.SaveChanges();
 
-
-                        //Enviando a la tabla inventory_movements
-                        Inventory_movements inventory_movements = new Inventory_movements
-                        {
-                            movement_id = lastIncventoryMovement + 1,
-                            type_movement = "Out",
-                            product_id = sales.product_id,
-                            quantity_moved = sales.quantity
-                        };
+                        //Enviando a la tabla
                         db.Inventory_movements.Add(new Inventory_movements
                         {
                             movement_id = lastIncventoryMovement + 1,
@@ -86,13 +85,12 @@ namespace ProyectoWeb.Controllers
                         {
                             //Actualizar el stock
                             inventory.stock = inventory.stock - sales.quantity;
-                            //Guardar cambios
-                            db.SaveChanges();
                         }
+                        db.SaveChanges();
                         dbContextTrasaction.Commit();
                         return RedirectToAction("Index");
                     }
-                    catch(Exception)
+                    catch(DbUpdateException)
                     {
                         dbContextTrasaction.Rollback();
                         throw;

@@ -61,27 +61,44 @@ namespace ProyectoWeb.Controllers
                         db.Purchases.Add(purchases);
                         db.SaveChanges();
 
-                        //Agregando a inventario
-                        Inventory inventory = new Inventory
-                        {
-                            product_id = (db.Inventory.Max(x => (int?)x.product_id) ?? 0) + 1,
-                            name = purchases.product,
-                            cost = purchases.total_cost,
-                            stock = purchases.quantity,
-                            purchase_id = purchases.purchase_id,
-                        };
-                        db.Inventory.Add(inventory);
-                        db.SaveChanges();
+                        // Verificar si el producto existe
+                        Inventory existing = db.Inventory.SingleOrDefault(i => i.name == purchases.product);
 
-                        //Enviando a la tabla inventory_movements
-                        Inventory_movements inventory_movements = new Inventory_movements
+                        if (existing != null)
                         {
-                            movement_id = lastMovement + 1,
-                            type_movement = "Entrada",
-                            product_id = inventory.product_id,
-                            quantity_moved = inventory.stock,
-                        };
-                        db.Inventory_movements.Add(inventory_movements);
+                            existing.stock += purchases.quantity;
+                            //Enviando a la tabla inventory_movements
+                            Inventory_movements inventory_movements = new Inventory_movements
+                            {
+                                movement_id = lastMovement + 1,
+                                type_movement = "Entrada",
+                                product_id = existing.product_id,
+                                quantity_moved = purchases.quantity,
+                            };
+                            db.Inventory_movements.Add(inventory_movements);
+                        }
+                        else
+                        {
+                            //Agregando a inventario
+                            Inventory inventory = new Inventory
+                            {
+                                product_id = (db.Inventory.Max(x => (int?)x.product_id) ?? 0) + 1,
+                                name = purchases.product,
+                                cost = purchases.total_cost,
+                                stock = purchases.quantity,
+                                purchase_id = purchases.purchase_id,
+                            };
+                            db.Inventory.Add(inventory);
+
+                            //Enviando a la tabla inventory_movements
+                            Inventory_movements inventory_movements = new Inventory_movements
+                            {
+                                movement_id = lastMovement + 1,
+                                type_movement = "Entrada",
+                                product_id = inventory.product_id,
+                                quantity_moved = purchases.quantity,
+                            };
+                        }
                         db.SaveChanges();
 
                         dbContextTransaction.Commit();

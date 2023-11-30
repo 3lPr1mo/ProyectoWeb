@@ -157,6 +157,10 @@ namespace ProyectoWeb.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Purchases purchases = db.Purchases.Find(id);
+            Inventory inv = db.Inventory.Find(id);
+            Inventory_movements inm = db.Inventory_movements.SingleOrDefault(x => x.product_id == inv.product_id);
+            db.Inventory_movements.Remove(inm);
+            db.Inventory.Remove(inv);
             db.Purchases.Remove(purchases);
             db.SaveChanges();
             return RedirectToAction("Index");

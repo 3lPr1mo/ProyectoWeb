@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProyectoWeb.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +9,11 @@ namespace ProyectoWeb.Controllers
 {
     public class ReporteVentasController : Controller
     {
+        nowhereluvBDEntities bddatos = new nowhereluvBDEntities();
         // GET: ReporteVentas
         public ActionResult Index()
         {
-            return View();
+            return View(bddatos.Sales.ToList());
         }
     }
 }

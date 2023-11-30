@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ProyectoWeb.Models.Sales>
+
+@{
+    ViewBag.Title = "VistaVentas";
+}
+
+<h2>VistaVentas</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Inventory.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.total_cost)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Inventory.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.firstname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.total_cost)
+        </td>
+
+    </tr>
+}
+
+</table>
+
+<div>
+    <div>
+        <a href="@Url.Action("VistaReporteVentas", new {id = "pdf"})">
+            reporte pdf
+        </a>
+    </div>
+    <div>
+        <a href="@Url.Action("VistaReporteVentas", new {id = "Excel"})">
+            reporte excel
+        </a>
+    </div>
+    <div>
+        <a href="@Url.Action("VistaReporteVentas", new {id = "Word"})">
+            reporte word
+        </a>
+    </div>
+</div>
